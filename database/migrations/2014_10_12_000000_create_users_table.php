@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
         $table->string('tipo');
    
   
-        $table->rememberToken();
+        // $table->rememberToken();
         $table->timestamps();
     });
 
