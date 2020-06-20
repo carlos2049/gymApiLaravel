@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
  Route::resource('users', 'User\UserController', ['except' => ['destroy']]);
- Route::resource('perfiles', 'User\PerfilController',['only' => ['index', 'store', 'show']]);
+ Route::resource('perfiles', 'User\PerfilController',['only' => ['index', 'store']]);

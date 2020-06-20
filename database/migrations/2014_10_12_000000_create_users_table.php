@@ -27,14 +27,14 @@ class CreateUsersTable extends Migration
             $table->string('a_paterno');
             $table->string('a_materno');
             $table->date('fecha_nacimiento');
-            $table->bigInteger('rut');
+            $table->string('rut', 15);
             $table->string('telefono');
             $table->string('email')->unique();
             $table->string('password');
             $table->BigInteger('id_perfil')->unsigned();
             $table->foreign('id_perfil')->references('id')->on('perfiles');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+           // $table->timestamp('email_verified_at')->nullable();
+        
             $table->timestamps();
         });
     }

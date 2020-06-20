@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        $users = User::all();
+        return response()->json(['data'=> $users],201);
     }
 
     /**
@@ -35,7 +37,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = $request->all();
+
+        $rules = [
+            'name' => 'required',
+            'a_paterno'=> 'required',
+            'a_materno'=> 'required',
+            'fecha_nacimiento'=> 'required',
+            'rut'=> 'required',
+            'telefono'=> 'required',
+            'email'=> 'required|email|unique:users',
+            'password'=> 'required|min:6|confirmed',
+            'id_perfil'=> 'required',
+        ];
+
+        $this->validate($request, $rules);
+        $campos['password']=bcrypt($request->password);
+        
+
+        $usuario = User::create($campos);
+
+        return response()->json(['data'=> $usuario],201);
     }
 
     /**

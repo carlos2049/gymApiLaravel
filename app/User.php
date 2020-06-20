@@ -17,8 +17,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-         'email',
-          'password',
+        'a_paterno',
+        'a_materno',
+        'fecha_nacimiento',
+        'rut',
+        'telefono',
+        'email',
+        'password',
+        'id_perfil',
     ];
 
     /**
@@ -35,7 +41,13 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
+
+
+    public static function generarToken(){
+        return str_random(40);
+    }
+
 }
