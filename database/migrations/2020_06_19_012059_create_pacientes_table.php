@@ -23,7 +23,7 @@ class CreatePacientesTable extends Migration
             $table->string('fono_contacto_eme');
             $table->date('fecha_ingreso');
 
-            $table->BigInteger('id_user')->unsigned();
+            $table->BigInteger('id_user')->unsigned()->unique();
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });
