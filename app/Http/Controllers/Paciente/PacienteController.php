@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Paciente;
+use App\User;
 
 class PacienteController extends Controller
 {
@@ -38,20 +39,30 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
-       $campos = $request->all();
-       $rules = [
-        'id_user' => 'required|unique:pacientes'
-       ];
+ 
+        $ultimoUser = User::latest('id')->value('id');
+      //  dd($ultimoUser);
+
+        $idPerfil = User::where('id', $ultimoUser)->value('id_perfil');
+
+        
+        $pacientePerfil = $request->id_user;
+  
+        if($idPerfil == 1){
+            $campos = $request->all();
+            $campos['id_user'] = $ultimoUser;
+            $rules = [
+             'id_user' => 'required|unique:pacientes'
+            ];
+            $paciente = Paciente::create($campos);
+            return response()->json(['data' => $paciente], 201);
+
+        }else{
+            return response()->json(['data' => 'el perfil no corresponde aqui ' . $idPerfil]) ;
+        }
        
-       $this->validate($request, $rules);
-
-       $paciente = Paciente::create($campos);
-      
-
-       
-
-       return response()->json(['data' => $paciente], 201);
+         
+    
     }
 
     /**
