@@ -58,7 +58,7 @@ class PacienteController extends Controller
             return response()->json(['data' => $paciente], 201);
 
         }else{
-            return response()->json(['data' => 'el perfil no corresponde aqui ' . $idPerfil]) ;
+            return response()->json(['data' => 'el perfil de usuario no corresponde  : ' . $idPerfil]) ;
         }
        
          
@@ -73,7 +73,10 @@ class PacienteController extends Controller
      */
     public function show(Paciente $paciente)
     {
-        //
+
+     
+        return response()->json(['data' => $paciente],201);
+      
     }
 
     /**
