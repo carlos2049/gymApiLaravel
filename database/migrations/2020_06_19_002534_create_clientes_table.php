@@ -15,8 +15,20 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
+            $table->string('actividad_fisica');
+            $table->string('objetivo');
+            $table->string('enfermedades');
+            $table->string('alergias');
+            $table->string('contacto_emergencia');
+            $table->string('fono_contacto_eme');
+            $table->date('fecha_ingreso');
+            $table->string('observaciones');
+           
+            $table->BigInteger('id_subplan')->unsigned();
             $table->BigInteger('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users');
+         
+            $table->foreign('id_subplan')->references('id')->on('sub_planes');
             $table->timestamps();
         });
     }
