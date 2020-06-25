@@ -20,6 +20,8 @@ class Cliente extends User
         'contacto_emergencia',
         'fono_contacto_eme',
         'fecha_ingreso',
+        'observaciones',
+        'id_subplan',
         'id_user',
 
     ];

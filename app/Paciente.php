@@ -12,12 +12,7 @@ class Paciente extends User
     }
     
     protected $fillable = [
-        'actividad_fisica',
-        'objetivo',
-        'enfermedades',
-        'alergias',
-        'contacto_emergencia',
-        'fono_contacto_eme',
+        'observaciones',
         'fecha_ingreso',
         'id_user',
 
