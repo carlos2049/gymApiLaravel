@@ -48,7 +48,7 @@ class PacienteController extends Controller
         
         $pacientePerfil = $request->id_user;
   
-        if($idPerfil == 1){
+        if($idPerfil == 2){
             $campos = $request->all();
             $campos['id_user'] = $ultimoUser;
             $rules = [
