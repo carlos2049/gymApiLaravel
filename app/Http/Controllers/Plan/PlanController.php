@@ -37,7 +37,16 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = $request->all();
+        $rules = [
+            'nombre' => 'required|unique:planes'
+        ];
+        $this->validate( $request , $rules );
+
+        $planes = Plan::create($campos);
+
+        return response()->json(['data'=> $planes],201);
+
     }
 
     /**

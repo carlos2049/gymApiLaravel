@@ -37,7 +37,21 @@ class SubPlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = $request->all();
+        $rules= [
+            'nombre' => 'required|unique:sub_planes',
+            'valor_mensual' => 'required',
+            'valor_trimestral' => 'required',
+            'valor_semestral' => 'required',
+            'valor_anual' => 'required',
+            
+        ];
+
+        $this->validate($request, $rules);
+
+        $subplanes = SubPlan::create($campos);
+        return response()->json(['data'=> $subplanes],201);
+
     }
 
     /**
