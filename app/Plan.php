@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
-    public function paciente()
+    public function subPlan()
     {
         return $this->hasMany(SubPlan::class);
     }
+    protected $table = 'planes';
     protected $fillable = [
         'nombre'
     ];

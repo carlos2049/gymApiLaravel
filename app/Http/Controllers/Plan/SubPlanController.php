@@ -15,7 +15,8 @@ class SubPlanController extends Controller
      */
     public function index()
     {
-        //
+        $subPlanes = SubPlan::all();
+        return response()->json(['data' => $subPlanes],200);
     }
 
     /**

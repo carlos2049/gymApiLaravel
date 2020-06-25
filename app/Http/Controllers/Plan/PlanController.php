@@ -15,7 +15,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $planes = Plan::all();
+        return response()->json(['data' => $planes],200);
     }
 
     /**

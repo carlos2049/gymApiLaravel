@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubPlan extends Model
 {
-    public function user() {
+    public function Plan() {
         return $this->belongsTo(Plan::class);      
     }
+
+    protected $table = 'sub_planes';
 
     protected $fillable = [
         'nombre',
