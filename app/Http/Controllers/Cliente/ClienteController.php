@@ -46,6 +46,7 @@ class ClienteController extends Controller
               $campos = $request->all();
               $campos['id_user'] = $ultimoUser;
               $rules = [
+               'id_subplan' => 'required',
                'id_user' => 'required|unique:pacientes'
               ];
               $cliente = Cliente::create($campos);

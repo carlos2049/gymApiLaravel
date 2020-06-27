@@ -60,9 +60,10 @@ class SubPlanController extends Controller
      * @param  \App\SubPlan  $subPlan
      * @return \Illuminate\Http\Response
      */
-    public function show(SubPlan $subPlan)
+    public function show( $id)
     {
-        //
+        $subplan = SubPlan::findOrFail($id);
+        return response()->json(['data'=> $subplan], 201);
     }
 
     /**

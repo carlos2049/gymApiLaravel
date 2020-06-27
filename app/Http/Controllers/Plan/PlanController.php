@@ -55,9 +55,11 @@ class PlanController extends Controller
      * @param  \App\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function show(Plan $plan)
+    public function show( $plan)
     {
-        //
+        $planes = Plan::find($plan);
+        return response()->json(['data'=> $planes], 201);
+
     }
 
     /**
