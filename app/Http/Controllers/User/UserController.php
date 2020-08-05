@@ -37,8 +37,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        
+       
         $campos = $request->all();
+        
+        $rol = $campos['id_perfil'];
 
+        // switch ($rol){
+        //     case "1";
+        //     return "perfil 1";
+        //     break;
+
+        //     case "2";
+        //     return "perfil 2";
+        //     break;
+
+        //     case "3";
+        //     return "perfil 3";
+        //     break;
+        // } 
+        
         $rules = [
             'name' => 'required',
             'a_paterno'=> 'required',
@@ -50,58 +68,30 @@ class UserController extends Controller
             'password'=> 'required|min:6|confirmed',
             'id_perfil'=> 'required',
         ];
-
+        
         $this->validate($request, $rules);
+        
         $campos['password']=bcrypt($request->password);
         
 
         $usuario = User::create($campos);
+        $idUser = $usuario->id;
+        
 
+       $createAdmin = $this->createAdmin($idUser); 
+
+      
+
+         
+        
         return response()->json(['data'=> $usuario],201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+   private function createAdmin($idUser){
+   
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    $rules = [
+        'id_user' => 'required|unique:admins'
+       ];
+   }
 }
