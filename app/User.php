@@ -17,10 +17,7 @@ class User extends Authenticatable
      * @var array
      */
    
-    public function paciente()
-    {
-        return $this->hasOne(Paciente::class);
-    }
+    
     protected $fillable = [
         'name',
         'a_paterno',
@@ -41,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'id'
     ];
 
     /**

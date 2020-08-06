@@ -4,7 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use App\User;
+use App\Admin;
+use App\Administrativo;
 
 class UserController extends Controller
 {
@@ -24,9 +28,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($validator)
     {
-        //
+        return $validator;
     }
 
     /**
@@ -35,28 +39,59 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function createUser(Request $request)
+    {     
         
-       
+        $validation = $this->validateUser($request);
+        if ($validation->fails()) {
+            return "error de validacion";
+        }
+        
         $campos = $request->all();
         
-        $rol = $campos['id_perfil'];
-
-        // switch ($rol){
-        //     case "1";
-        //     return "perfil 1";
-        //     break;
-
-        //     case "2";
-        //     return "perfil 2";
-        //     break;
-
-        //     case "3";
-        //     return "perfil 3";
-        //     break;
-        // } 
         
+        $perfil = $campos['id_perfil'];
+             
+        $campos['password']=bcrypt($request->password);
+        $usuario = User::create($campos);
+
+        $idUser = [
+            "id_user" => $usuario->id
+        ];
+        
+        switch ($perfil){
+            case "1";
+                $admins = Admin::create($idUser);
+            break;
+
+            case "2";
+                $admins = Administrativo::create($idUser);
+            break;
+
+            case "3";
+            return "perfil 3";
+            break;
+        } 
+        
+      
+
+     
+        return response()->json(['data'=> $usuario],201);
+    }
+
+    private function createAdmin($idUser){
+   
+
+        $rules = [
+            'id_user' => 'required|unique:admins'
+        ];
+        return $validator = Validator::make($idUser, $rules);
+    }
+
+
+
+    private function validateUser($request){
+           
         $rules = [
             'name' => 'required',
             'a_paterno'=> 'required',
@@ -68,30 +103,8 @@ class UserController extends Controller
             'password'=> 'required|min:6|confirmed',
             'id_perfil'=> 'required',
         ];
-        
-        $this->validate($request, $rules);
-        
-        $campos['password']=bcrypt($request->password);
-        
+    
+        return $validator = Validator::make($request->all(), $rules);
 
-        $usuario = User::create($campos);
-        $idUser = $usuario->id;
-        
-
-       $createAdmin = $this->createAdmin($idUser); 
-
-      
-
-         
-        
-        return response()->json(['data'=> $usuario],201);
     }
-
-   private function createAdmin($idUser){
-   
-
-    $rules = [
-        'id_user' => 'required|unique:admins'
-       ];
-   }
 }

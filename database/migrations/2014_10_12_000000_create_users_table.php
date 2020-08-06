@@ -12,14 +12,15 @@ class CreateUsersTable extends Migration
      * @return void
      */
     public function up()
-    {   Schema::create('perfiles', function (Blueprint $table) {
-        $table->id();
-        $table->string('tipo');
+    {   
+        // Schema::create('perfiles', function (Blueprint $table) {
+        // $table->id();
+        // $table->string('tipo');
    
   
-        // $table->rememberToken();
-        $table->timestamps();
-    });
+        // // $table->rememberToken();
+        // $table->timestamps();
+        // });
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -32,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->BigInteger('id_perfil')->unsigned();
-            $table->foreign('id_perfil')->references('id')->on('perfiles');
+            // $table->foreign('id_perfil')->references('id')->on('perfiles');
            // $table->timestamp('email_verified_at')->nullable();
         
             $table->timestamps();
