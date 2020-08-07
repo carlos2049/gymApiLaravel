@@ -14,21 +14,20 @@ use App\Paciente;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+
+    public function index(){
+
         $users = User::all();
         return response()->json(['data'=> $users],201);
     }
 
-    private function createProfile($idUser, $request){
+    private function createProfile($usuario, $request){
 
         $profile = $request->id_perfil;
-
+        $idUser = [
+            "id_user" => strval($usuario)
+        ];
+     
         switch ($profile){
             case "1";
                 $admins = Admin::create($idUser);             
@@ -46,27 +45,26 @@ class UserController extends Controller
                 $paciente = $this->createPaciente($idUser, $request);
             break;
         } 
-
     }
 
     private function createPaciente($idUser, $request){
+
         $campos = $request->all();
-     
         $campos['id_user'] = strval($idUser['id_user']); 
         
         $cliente = Paciente::create($campos);
     }
 
     private function createCLiente($idUser, $request){
+
         $campos = $request->all();
-     
         $campos['id_user'] = strval($idUser['id_user']); 
         
         $cliente = Cliente::create($campos);
     }
 
-    private function validations($request)
-    {
+    private function validations($request){
+
         $perfil = $request->id_perfil;
         $validation = $this->validateUser($request);
         if ($validation->fails()) {
@@ -91,13 +89,10 @@ class UserController extends Controller
         };
 
         return $validation ;
-
     }
 
+    public function createUser(Request $request){      
 
-    public function createUser(Request $request)
-    {     
-        
         $validation = $this->validations($request);
         
         if (is_string($validation) )  {
@@ -106,18 +101,11 @@ class UserController extends Controller
         
         $campos = $request->all();
          
-        
         $campos['password']=bcrypt($request->password);
         $usuario = User::create($campos);
 
-        $idUser = [
-            "id_user" => $usuario->id
-        ];
-
-        $createProfile = $this->createProfile($idUser, $request);
-        
-
-     
+        $createProfile = $this->createProfile($usuario->id, $request);
+          
         return response()->json(['data'=> $usuario],201);
     }
 
@@ -131,6 +119,7 @@ class UserController extends Controller
     }
 
     private function validateCliente($request){
+
         $rules = [
             'actividad_fisica' => 'required',
             'objetivo'=> 'required',
@@ -145,7 +134,6 @@ class UserController extends Controller
         ];
     
         return $validator = Validator::make($request->all(), $rules);
-
     }
 
     private function validateUser($request){
@@ -163,6 +151,5 @@ class UserController extends Controller
         ];
     
         return $validator = Validator::make($request->all(), $rules);
-
     }
 }
