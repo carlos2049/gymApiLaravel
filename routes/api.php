@@ -15,11 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('users', 'User\UserController@createUser');
+Route::post('users', 'UserController@createUser');
 
- Route::resource('perfiles', 'User\PerfilController',['only' => ['index', 'store']]);
- Route::resource('pacientes', 'Paciente\PacienteController',['only' => ['index', 'store','show']]);
- Route::resource('clientes', 'Cliente\ClienteController',['only' => ['index', 'store','show']]);
- Route::resource('admins', 'Admin\AdminController',['only' => ['index', 'store']]);
+
  Route::resource('planes', 'Plan\PlanController',['only' => ['index', 'store','show']]);
  Route::resource('subplanes', 'Plan\SubPlanController',['only' => ['index', 'store','show']]);
