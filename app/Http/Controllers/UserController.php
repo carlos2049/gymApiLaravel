@@ -15,10 +15,18 @@ use App\Paciente;
 class UserController extends Controller
 {
 
-    public function index(){
+    public function all(){
 
         $users = User::all();
         return response()->json(['data'=> $users],201);
+    }
+
+    public function pacientes(){
+       
+        $pacientes = Paciente::all();
+     
+        return response()->json(['data'=> $pacientes],201);
+
     }
 
     private function createProfile($usuario, $request){

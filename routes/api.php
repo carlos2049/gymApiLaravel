@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('users', 'UserController@createUser');
+Route::get('pacientes', 'UserController@pacientes');
 
 
  Route::resource('planes', 'Plan\PlanController',['only' => ['index', 'store','show']]);
